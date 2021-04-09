@@ -1,0 +1,200 @@
+dmin1@admin1-HP-280-G4-MT-Business-PC:~$ mongo
+MongoDB shell version v4.4.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("d4b1b335-b2e5-4e5f-9024-63ade2d8a9c2") }
+MongoDB server version: 4.4.4
+---
+The server generated these startup warnings when booting: 
+        2021-04-05T08:54:02.390+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-04-05T08:54:08.933+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use db;
+switched to db db
+> show dbs;
+admin    0.000GB
+company  0.000GB
+config   0.000GB
+db1      0.000GB
+local    0.000GB
+mg       0.000GB
+nit      0.000GB
+np       0.000GB
+uchiha   0.000GB
+> db. createCollection("Company")
+{ "ok" : 1 }
+> db.Company.insertMany([{custId:"A123",amount:500,status:"A"},{custId:"A123",amount:250,status:"A"},{custId:"B123",amount:200,status:"A"},{custId:"A123",amount:300,status:"D"}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("606a8588eef043fe9951f072"),
+		ObjectId("606a8588eef043fe9951f073"),
+		ObjectId("606a8588eef043fe9951f074"),
+		ObjectId("606a8588eef043fe9951f075")
+	]
+}
+> db.Company.find()
+{ "_id" : ObjectId("606a8588eef043fe9951f072"), "custId" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f073"), "custId" : "A123", "amount" : 250, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f074"), "custId" : "B123", "amount" : 200, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f075"), "custId" : "A123", "amount" : 300, "status" : "D" }
+> db.Company.find().pretty()
+{
+	"_id" : ObjectId("606a8588eef043fe9951f072"),
+	"custId" : "A123",
+	"amount" : 500,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f073"),
+	"custId" : "A123",
+	"amount" : 250,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f074"),
+	"custId" : "B123",
+	"amount" : 200,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f075"),
+	"custId" : "A123",
+	"amount" : 300,
+	"status" : "D"
+}
+> db.Company.aggregate([{$match:{status:"A"}}])
+{ "_id" : ObjectId("606a8588eef043fe9951f072"), "custId" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f073"), "custId" : "A123", "amount" : 250, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f074"), "custId" : "B123", "amount" : 200, "status" : "A" }
+> db.Company.aggregate([{$match:{status:"A"}}]).pretty()
+{
+	"_id" : ObjectId("606a8588eef043fe9951f072"),
+	"custId" : "A123",
+	"amount" : 500,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f073"),
+	"custId" : "A123",
+	"amount" : 250,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f074"),
+	"custId" : "B123",
+	"amount" : 200,
+	"status" : "A"
+}
+> db.Company.aggregate([{$group:{_id:"$custId","max-val":{$max:"$amount"}}}])
+{ "_id" : "B123", "max-val" : 200 }
+{ "_id" : "A123", "max-val" : 500 }
+> db.Company.aggregate([{$group:{_id:"$custId","max-val":{$max:"$amount"}}}]).pretty()
+{ "_id" : "B123", "max-val" : 200 }
+{ "_id" : "A123", "max-val" : 500 }
+> db.Company.aggregate([{$group:{_id:"$custId","count":{$sum:1}}}])
+{ "_id" : "B123", "count" : 1 }
+{ "_id" : "A123", "count" : 3 }
+> db.Company.aggregate([{$project:{custId:1,amount:0,status:1}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "Invalid $project :: caused by :: Cannot do exclusion on field amount in inclusion projection",
+	"code" : 31254,
+	"codeName" : "Location31254"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Company.aggregate{$project:{custId:1,amount:0,status:1}
+... 
+... 
+> 
+> db.Company.aggregate({$project:{custId:1,amount:0,status:1}})
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "Invalid $project :: caused by :: Cannot do exclusion on field amount in inclusion projection",
+	"code" : 31254,
+	"codeName" : "Location31254"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Company.aggregate([{$project:{custId:1,amount:0,status:1,_id:0}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "Invalid $project :: caused by :: Cannot do exclusion on field amount in inclusion projection",
+	"code" : 31254,
+	"codeName" : "Location31254"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Company.aggregate([{$project:{custId:1,status:1,_id:0}}])
+{ "custId" : "A123", "status" : "A" }
+{ "custId" : "A123", "status" : "A" }
+{ "custId" : "B123", "status" : "A" }
+{ "custId" : "A123", "status" : "D" }
+> db.Company.aggregate([{$limit:3}])
+{ "_id" : ObjectId("606a8588eef043fe9951f072"), "custId" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f073"), "custId" : "A123", "amount" : 250, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f074"), "custId" : "B123", "amount" : 200, "status" : "A" }
+> db.Company.aggregate([{$group:{_id:"$custId","sum":{$sum="$amount"}}}])
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:56
+> db.Company.aggregate([{$group:{_id:"$custId","sum":{$sum:"$amount"}}}])
+{ "_id" : "B123", "sum" : 200 }
+{ "_id" : "A123", "sum" : 1050 }
+> db.Company.aggregate([{$match:{$amount:{$gte:300}}}])
+uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "unknown top level operator: $amount",
+	"code" : 2,
+	"codeName" : "BadValue"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:639:17
+assert.commandWorked@src/mongo/shell/assert.js:729:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.Company.aggregate([{$match:{amount:{$gte:300}}}])
+{ "_id" : ObjectId("606a8588eef043fe9951f072"), "custId" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("606a8588eef043fe9951f075"), "custId" : "A123", "amount" : 300, "status" : "D" }
+> db.Company.aggregate([{$match:{amount:{$gte:300}}}]).pretty()
+{
+	"_id" : ObjectId("606a8588eef043fe9951f072"),
+	"custId" : "A123",
+	"amount" : 500,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("606a8588eef043fe9951f075"),
+	"custId" : "A123",
+	"amount" : 300,
+	"status" : "D"
+}
+> 
+

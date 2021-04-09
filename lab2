@@ -1,0 +1,75 @@
+{
+ filter: {
+  age: {
+   age: {
+    lte: 24
+   }
+  }
+ }
+}
+
+
+
+
+{
+ filter: {
+  age: {
+   age: {
+    lte: 21
+   }
+  }
+ }
+}
+
+{
+ filter: {
+  fname: 'rohan'
+ }
+}
+
+{
+ filter: {
+  age: {
+   $not: {
+    $eq: 20
+   }
+  }
+ }
+}
+
+{
+ filter: {
+  age: {
+   $lte: 24
+  }
+ }
+}
+
+
+{
+ filter: {
+  $or: [
+   {
+    exp: 5
+   },
+   {
+    exp: 6
+   }
+  ]
+ }
+}
+
+{
+ filter: {
+  $and: [
+   {
+    lname: 'sharma'
+   },
+   {
+    age: 26
+   }
+  ]
+ }
+}
+
+
