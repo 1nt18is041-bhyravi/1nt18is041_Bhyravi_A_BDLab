@@ -1,0 +1,615 @@
+doop@bhyravi-virtual-machine:~$ gedit abc.txt
+hdoop@bhyravi-virtual-machine:~$ gedit ~/home/hdoop/documents/file.txt
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt    Downloads          hadoop-3.2.1.tar.gz    Pictures  Templates
+Desktop    eclipse-workspace  hadoop-3.2.1.tar.gz.1  Public    tmpdata
+Documents  hadoop-3.2.1       Music                  snap      Videos
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls
+ls: Call From bhyravi-virtual-machine/127.0.1.1 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+hdoop@bhyravi-virtual-machine:~$ start-all.sh
+WARNING: Attempting to start all Apache Hadoop daemons as hdoop in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [localhost]
+Starting datanodes
+Starting secondary namenodes [bhyravi-virtual-machine]
+Starting resourcemanager
+Starting nodemanagers
+hdoop@bhyravi-virtual-machine:~$ jps
+2308 NameNode
+2965 NodeManager
+2597 SecondaryNameNode
+3127 Jps
+2840 ResourceManager
+2429 DataNode
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls
+ls: `.': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 14:22 /bhyravi
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 13:52 /empty.txt
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 13:49 /home
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt    Downloads          hadoop-3.2.1.tar.gz    Pictures  Templates
+Desktop    eclipse-workspace  hadoop-3.2.1.tar.gz.1  Public    tmpdata
+Documents  hadoop-3.2.1       Music                  snap      Videos
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mkdir bhyravi
+mkdir: `hdfs://127.0.0.1:9000/user/hdoop': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mkdir /bhyravi
+mkdir: `/bhyravi': File exists
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mkdir /Bhyravi
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -touchz empty.txt
+touchz: `empty.txt': No such file or directory: `hdfs://127.0.0.1:9000/user/hdoop/empty.txt'
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -touchz /empty.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 15:27 /Bhyravi
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 14:22 /bhyravi
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:29 /empty.txt
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 13:49 /home
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -touchz /Bhyravi/empty.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -touchz /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 2 items
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mkdir Bhyravi/1nt18is041
+mkdir: `hdfs://127.0.0.1:9000/user/hdoop/Bhyravi': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mkdir /Bhyravi/1nt18is041
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls
+ls: `.': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 15:35 /Bhyravi
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 14:22 /bhyravi
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:29 /empty.txt
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 13:49 /home
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt  Documents  eclipse-workspace  hadoop-3.2.1.tar.gz    Music     Public  Templates  Videos
+Desktop  Downloads  hadoop-3.2.1       hadoop-3.2.1.tar.gz.1  Pictures  snap    tmpdata
+hdoop@bhyravi-virtual-machine:~$ gedit bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt                 Documents          hadoop-3.2.1           Music     snap       Videos
+bhyravi_1nt18is041.txt  Downloads          hadoop-3.2.1.tar.gz    Pictures  Templates
+Desktop                 eclipse-workspace  hadoop-3.2.1.tar.gz.1  Public    tmpdata
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put /^C
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put /bhyravi_1nt18is041.txt /Bhyravi/1nt18is041
+put: `/bhyravi_1nt18is041.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put /home/bhyravi_1nt18is041.txt /Bhyravi/1nt18is041
+put: `/home/bhyravi_1nt18is041.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put ~/home/bhyravi_1nt18is041.txt /Bhyravi/1nt18is041
+put: `/home/hdoop/home/bhyravi_1nt18is041.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls Bhyravi/
+ls: `Bhyravi/': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 15:35 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put ~/bhyravi_1nt18is041.txt /Bhyravi/1nt18is041
+2021-05-20 15:46:33,923 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put ~/bhyravi_1nt18is041 /Bhyravi/1nt18is041
+put: `/home/hdoop/bhyravi_1nt18is041': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -put ~/home/hdoop/bhyravi_1nt18is041 /Bhyravi/1nt18is041
+put: `/home/hdoop/home/hdoop/bhyravi_1nt18is041': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 1 items
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/empty1
+copyToLocal: `/Bhyravi/empty1': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt                 Documents          empty1.txt           hadoop-3.2.1.tar.gz.1  Public     tmpdata
+bhyravi_1nt18is041.txt  Downloads          hadoop-3.2.1         Music                  snap       Videos
+Desktop                 eclipse-workspace  hadoop-3.2.1.tar.gz  Pictures               Templates
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/home/hadoop/abc.txt /Bhyravi
+moveFromLocal: `/home/hdoop/home/hadoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/home/hdoop/abc.txt /Bhyravi
+moveFromLocal: `/home/hdoop/home/hdoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/home/hdoop/abc  /Bhyravi
+moveFromLocal: `/home/hdoop/home/hdoop/abc': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ ls
+abc.txt                 Documents          empty1.txt           hadoop-3.2.1.tar.gz.1  Public     tmpdata
+bhyravi_1nt18is041.txt  Downloads          hadoop-3.2.1         Music                  snap       Videos
+Desktop                 eclipse-workspace  hadoop-3.2.1.tar.gz  Pictures               Templates
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal abc.txt /Bhyravi
+2021-05-20 16:01:41,767 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/home/hdoop/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/home/hdoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/home/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/home/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal ~/abc /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/abc': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal /home/hdoop/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/hdoop/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -moveFromLocal /home/abc.txt /Bhyravi/1nt18is041
+moveFromLocal: `/home/abc.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 15:46 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/abc.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls/1nt18is041
+-ls/1nt18is041: Unknown command
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /1nt18is041
+ls: `/1nt18is041': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 1 items
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 4 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 15:46 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/abc.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -mv /Bhyravi/abc.txt /Bhyravi/1nt18is041
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 2 items
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/1nt18is041/abc.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 16:08 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls/Bhyravi
+-ls/Bhyravi: Unknown command
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 16:08 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 2 items
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/1nt18is041/abc.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/bhyravi_1nt18is041.txt
+^[[A-cp: Not enough arguments: expected 2 but got 1
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+Usage: hadoop fs [generic options] -cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/bhyravi_1nt18is041.txt /Bhyravi/empty.txt
+cp: `/Bhyravi/empty.txt': File exists
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/bhyravi_1nt18is041.txt /Bhyravi/input.txt
+cp: `/Bhyravi/bhyravi_1nt18is041.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/bhyravi_1nt18is041.txt /Bhyravi/input_copy.txt
+cp: `/Bhyravi/bhyravi_1nt18is041.txt': No such file or directory
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 16:08 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 2 items
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/1nt18is041/abc.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/1nt18is041 
+2021-05-20 16:34:03,483 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+
+copyToLocal: `bhyravi_1nt18is041.txt': File exists
+
+
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/1nt18is041/abc.txt
+2021-05-20 16:34:56,512 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/empty.txt
+hdoop@bhyravi-virtual-machine:~$ ls
+1nt18is041              Desktop    eclipse-workspace  hadoop-3.2.1           Music     snap       Videos
+abc.txt                 Documents  empty1.txt         hadoop-3.2.1.tar.gz    Pictures  Templates
+bhyravi_1nt18is041.txt  Downloads  empty.txt          hadoop-3.2.1.tar.gz.1  Public    tmpdata
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/1nt18is041/abc.txt
+
+
+
+
+-cp: Not enough arguments: expected 2 but got 1
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+^[[A	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+Usage: hadoop fs [generic options] -cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt /Bhyravi/^C
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -copyToLocal /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt /Bhyravi/bhyravi_1nt18is041_copy.txt
+copyToLocal: `/Bhyravi/bhyravi_1nt18is041_copy.txt': No such file or directory: `file:///Bhyravi/bhyravi_1nt18is041_copy.txt'
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt /Bhyravi/bhyravi_1nt18is041_copy.txt
+2021-05-20 16:39:54,240 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2021-05-20 16:39:54,703 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cp /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt /Bhyravi/abc_copy.txt
+2021-05-20 16:40:33,688 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2021-05-20 16:40:33,964 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -dus /Bhyravi
+dus: DEPRECATED: Please use 'du -s' instead.
+141  141  /Bhyravi
+hdoop@bhyravi-virtual-machine:~$ hadoop fs du -s /Bhyravi
+du: Unknown command
+Did you mean -du?  This command begins with a dash.
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -dus /Bhyravi
+dus: DEPRECATED: Please use 'du -s' instead.
+141  141  /Bhyravi
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -du /Bhyravi/1nt18is041
+12  12  /Bhyravi/1nt18is041/abc.txt
+43  43  /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -stat /Bhyravi
+2021-05-20 11:10:34
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -stat /Bhyravi/1nt18is041
+2021-05-20 10:38:52
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 2 items
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/1nt18is041/abc.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cat /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+2021-05-20 16:50:38,608 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+Syntax to list is command is hadoop fs -ls
+hdoop@bhyravi-virtual-machine:~$ gedit bhyravi_1nt18is041.txt
+
+^[[B^[[B^[[Bhdoop@bhyravi-virtual-machine:~$ 
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi
+Found 5 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-20 16:08 /Bhyravi/1nt18is041
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 16:40 /Bhyravi/abc_copy.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 16:39 /Bhyravi/bhyravi_1nt18is041_copy.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:30 /Bhyravi/empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-20 15:31 /Bhyravi/empty1.txt
+hdoop@bhyravi-virtual-machine:~$ gedit /bhyravi/empty.txt
+hdoop@bhyravi-virtual-machine:~$ gedit /Bhyravi/empty.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -ls /Bhyravi/1nt18is041
+Found 2 items
+-rw-r--r--   1 hdoop supergroup         12 2021-05-20 16:01 /Bhyravi/1nt18is041/abc.txt
+-rw-r--r--   1 hdoop supergroup         43 2021-05-20 15:46 /Bhyravi/1nt18is041/bhyravi_1nt18is041.txt
+hdoop@bhyravi-virtual-machine:~$ gedit /bhyravi/1nt18is041/abc.txt
+hdoop@bhyravi-virtual-machine:~$ gedit abc.txt
+hdoop@bhyravi-virtual-machine:~$ hadoop fs cat /Bhyravi/1nt18is041/abc.txt
+cat: Unknown command
+Did you mean -cat?  This command begins with a dash.
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@bhyravi-virtual-machine:~$ hadoop fs -cat /Bhyravi/1nt18is041/abc.txt
+2021-05-20 16:56:50,273 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hello there
+hdoop@bhyravi-virtual-machine:~$ 
+
+
